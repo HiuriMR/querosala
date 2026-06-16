@@ -1,5 +1,13 @@
 # 🚀 QueroSala - Backend
 
+
+<div align="center">
+  <video src="https://github.com/user-attachments/assets/b9561ead-7d42-4130-a2f9-aa2f824e32cb" autoplay loop muted playsinline width="600px">
+    Seu navegador não suporta a tag de vídeo.
+  </video>
+</div>
+
+
 Sistema desenvolvido para gerenciamento de salas corporativas e reservas, com integração de dados climáticos em tempo real para auxiliar na tomada de decisão e planejamento de utilização dos ambientes.
 
 ---
