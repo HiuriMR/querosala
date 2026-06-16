@@ -46,4 +46,16 @@ public class Reserva {
     public Sala getSala() {
         return sala;
     }
+
+    public void setDataHoraInicio(LocalDateTime dataHoraInicio) {
+        this.dataHoraInicio = dataHoraInicio;
+    }
+
+    public void setDataHoraFim(LocalDateTime dataHoraFim) {
+        this.dataHoraFim = dataHoraFim;
+    }
+
+    public void setSala(Sala sala) {
+        this.sala = sala;
+    }
 }

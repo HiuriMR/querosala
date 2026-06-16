@@ -1,5 +1,6 @@
 package br.com.querosala.service;
 
+import br.com.querosala.dto.ReservaAtualizacaoDTO;
 import br.com.querosala.dto.ReservaCadastroDTO;
 import br.com.querosala.dto.ReservaDTO;
 import br.com.querosala.dto.SalaDTO;
@@ -61,6 +62,63 @@ public class ReservaService {
                 reservaSalva.getSala().getNome(),
                 reservaSalva.getDataHoraInicio(),
                 reservaSalva.getDataHoraFim()
+        );
+    }
+
+    public ReservaDTO atualizarReserva(
+            Long id,
+            ReservaAtualizacaoDTO dados){
+
+        Reserva reserva = reservaRepository
+                .findById(id)
+                .orElseThrow();
+
+        if(dados.dataHoraFim()
+                .isBefore(dados.dataHoraInicio())){
+
+            throw new IllegalArgumentException(
+                    "A data final deve ser posterior à inicial");
+        }
+
+        Sala sala = salaRepository
+                .findById(dados.salaId())
+                .orElseThrow();
+
+        List<Reserva> reservasSala =
+                reservaRepository.buscarReservasDaSala(
+                        sala.getId());
+
+        boolean temConflito =
+                reservasSala.stream()
+                        .filter(r -> !r.getId().equals(id))
+                        .anyMatch(r ->
+                                dados.dataHoraInicio()
+                                        .isBefore(r.getDataHoraFim())
+                                        &&
+                                        dados.dataHoraFim()
+                                                .isAfter(r.getDataHoraInicio()));
+
+        if(temConflito){
+
+            throw new IllegalArgumentException(
+                    "Sala indisponível para o horário escolhido");
+        }
+
+        reserva.setSala(sala);
+        reserva.setDataHoraInicio(
+                dados.dataHoraInicio());
+
+        reserva.setDataHoraFim(
+                dados.dataHoraFim());
+
+        Reserva reservaAtualizada =
+                reservaRepository.save(reserva);
+
+        return new ReservaDTO(
+                reservaAtualizada.getId(),
+                reservaAtualizada.getSala().getNome(),
+                reservaAtualizada.getDataHoraInicio(),
+                reservaAtualizada.getDataHoraFim()
         );
     }
 

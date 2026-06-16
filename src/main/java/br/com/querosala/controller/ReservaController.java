@@ -1,5 +1,6 @@
 package br.com.querosala.controller;
 
+import br.com.querosala.dto.ReservaAtualizacaoDTO;
 import br.com.querosala.dto.ReservaCadastroDTO;
 import br.com.querosala.dto.ReservaDTO;
 import br.com.querosala.service.ReservaService;
@@ -33,6 +34,17 @@ public class ReservaController {
             @Valid @RequestBody ReservaCadastroDTO dados) {
 
         return reservaService.cadastrarReserva(dados);
+    }
+
+    @PutMapping("/{id}")
+    public ReservaDTO atualizarReserva(
+            @PathVariable Long id,
+            @Valid @RequestBody ReservaAtualizacaoDTO dados){
+
+        return reservaService
+                .atualizarReserva(
+                        id,
+                        dados);
     }
 
     @DeleteMapping("/{id}")

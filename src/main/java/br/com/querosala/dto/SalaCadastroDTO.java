@@ -1,5 +1,6 @@
 package br.com.querosala.dto;
 
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,5 +13,6 @@ public record SalaCadastroDTO(
         Integer capacidade,
         @NotNull(message = "Andar é obrigatório")
         @Min(value = 0, message = "Andar não pode ser menor que 0")
+        @Max(value = 18, message = "Andar não pode ser maior que 18")
         Integer andar
 ) {}
